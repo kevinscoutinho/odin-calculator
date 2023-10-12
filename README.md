@@ -1,2 +1,6 @@
 # odin-calculator
 Website project as part of the Odin Project curriculum
+
+This is aimed at applying and reinforcing the knowledge gained in the areas of JavaScript, CSS, and HTML. This project involves creating a fully functional calculator that allows users to perform basic arithmetic operations such as addition, subtraction, multiplication, and division.
+
+The core objectives of this project entail the utilization of HTML to construct a well-organized and user-friendly calculator interface. CSS will be employed to enhance the aesthetics and ensure an intuitive user experience. Leveraging JavaScript, the project will focus on implementing robust functionality to handle user interactions, perform accurate calculations, and dynamically update the display in real-time. Event listeners will be integrated to capture and process user input, enabling seamless execution of the desired mathematical operations. Additionally, proficient DOM manipulation will be showcased to maintain synchronization between user actions and the calculator's display, resulting in a highly responsive and engaging web application.
