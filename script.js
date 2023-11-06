@@ -1,40 +1,105 @@
-function add() {
-    let sum = 0;
-    for(let i in arguments){
-        sum += arguments[i];
+function add(a,b) {
+    return a + b;
+}
+
+function subtract(a,b) {
+    return a - b;
+}
+
+function multiply(a,b) {
+    return a * b;
+}
+
+function divide(a,b) {
+    if (b === 0) return "Error, division by zero."
+    return a / b;
+}
+
+function typeCharacters(e) {
+    const screen = document.getElementById('screen');
+
+    let screenContent = screen.textContent.split("");
+    let lastDigit = screenContent[screenContent.length - 1]
+    let actualDigit = this.textContent;
+
+    if (
+        (
+            lastDigit === '+' ||
+            lastDigit === '−' ||
+            lastDigit === '×' ||
+            lastDigit === '÷' ||
+            lastDigit === '.'
+        ) && 
+        (
+            actualDigit === '+' ||
+            actualDigit === '−' ||
+            actualDigit === '×' ||
+            actualDigit === '÷' ||
+            actualDigit === '.'
+        )
+        )
+    {
+        screenContent.pop();
+        screen.textContent = screenContent.join("") + actualDigit;
+    } else if (
+        (
+        actualDigit === '+' ||
+        actualDigit === '−' ||
+        actualDigit === '×' ||
+        actualDigit === '÷'
+        ) && (
+        screenContent.includes('+') ||
+        screenContent.includes('−') ||
+        screenContent.includes('×') ||
+        screenContent.includes('÷')
+        )
+    ) {
+        operate();
+        screen.textContent = screen.textContent + actualDigit; 
+    } else {
+        screen.textContent = screenContent.join("") + actualDigit;
     }
-    return sum;
+
+
+
+    console.log(screenContent);
 }
 
-function subtract() {
-    let diference = arguments[0];
-    for (let i = 1; i < arguments.length; i++){
-        diference -= arguments[i];
+function erase() {
+    const screen = document.getElementById('screen');
+    let screenContent = screen.textContent.split("");
+    screenContent.pop();
+    screen.textContent = screenContent.join("");
+}
+
+function clearAll() {
+    document.getElementById('screen').textContent = "";
+}
+
+function operate() {
+    const screen = document.getElementById('screen');
+    let screenContent = screen.textContent;
+
+    if (screenContent.includes('+')){
+        let operationArray = screenContent.split('+');
+        let result = add(+operationArray[0], +operationArray[1]);
+        screen.textContent = result;
+    } else if (screenContent.includes('−')){
+        let operationArray = screenContent.split('−');
+        let result = subtract(+operationArray[0], +operationArray[1]);
+        screen.textContent = result;
+    } else if (screenContent.includes('×')){
+        let operationArray = screenContent.split('×');
+        let result = multiply(+operationArray[0], +operationArray[1]);
+        screen.textContent = result;
+    } else if (screenContent.includes('÷')){
+        let operationArray = screenContent.split('÷');
+        let result = divide(+operationArray[0], +operationArray[1]);
+        screen.textContent = result;
     }
-    return diference;
-}
 
-function multiply() {
-    let product = arguments[0];
-    for (let i = 1; i < arguments.length; i++){
-        product *= arguments[i];
-    }
-    return product;
-}
 
-function divide() {
-    let quotient = arguments[0];
-    for (let i = 1; i < arguments.length; i++){
-        quotient /= arguments[i];
-    }
-    return quotient;
 }
-
-function operate(e) {
-    const screen2 = document.getElementById('screen');
-    screen2.textContent += this.textContent;
-}
-
 
 //Get key elements
 const keyZero = document.getElementById("k0");
@@ -47,27 +112,39 @@ const keySix = document.getElementById("k6");
 const keySeven = document.getElementById("k7");
 const keyEight = document.getElementById("k8");
 const keyNine = document.getElementById("k9");
+
+const keyDot = document.getElementById("kdot");
+
 const keySum = document.getElementById("k+");
 const keySubtrac = document.getElementById("k-");
 const keyMulti = document.getElementById("kx");
 const keyDivision = document.getElementById("k/");
+
+const keyErase = document.getElementById("kback");
+const keyClear = document.getElementById("kclear");
 const keyEqual = document.getElementById("k=");
 
 
-keyZero.addEventListener('click', operate);
-keyOne.addEventListener('click', operate);
-keyTwo.addEventListener('click', operate);
-keyThree.addEventListener('click', operate);
-keyFour.addEventListener('click', operate);
-keyFive.addEventListener('click', operate);
-keySix.addEventListener('click', operate);
-keySeven.addEventListener('click', operate);
-keyEight.addEventListener('click', operate);
-keyNine.addEventListener('click', operate);
-keySum.addEventListener('click', operate);
-keySubtrac.addEventListener('click', operate);
-keyMulti.addEventListener('click', operate);
-keyDivision.addEventListener('click', operate);
+keyZero.addEventListener('click', typeCharacters);
+keyOne.addEventListener('click', typeCharacters);
+keyTwo.addEventListener('click', typeCharacters);
+keyThree.addEventListener('click', typeCharacters);
+keyFour.addEventListener('click', typeCharacters);
+keyFive.addEventListener('click', typeCharacters);
+keySix.addEventListener('click', typeCharacters);
+keySeven.addEventListener('click', typeCharacters);
+keyEight.addEventListener('click', typeCharacters);
+keyNine.addEventListener('click', typeCharacters);
+
+keyDot.addEventListener('click', typeCharacters);
+
+keySum.addEventListener('click', typeCharacters);
+keySubtrac.addEventListener('click', typeCharacters);
+keyMulti.addEventListener('click', typeCharacters);
+keyDivision.addEventListener('click', typeCharacters);
+
+keyErase.addEventListener('click', erase);
+keyClear.addEventListener('click', clearAll);
 keyEqual.addEventListener('click', operate);
 
 
