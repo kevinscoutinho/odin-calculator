@@ -1,3 +1,5 @@
+//operations 
+
 function add(a,b) {
     return a + b;
 }
@@ -14,6 +16,7 @@ function divide(a,b) {
     if (b === 0) return "Error, division by zero."
     return a / b;
 }
+
 
 function typeCharacters(e) {
     const screen = document.getElementById('screen');
@@ -56,6 +59,30 @@ function typeCharacters(e) {
     ) {
         operate();
         screen.textContent = screen.textContent + actualDigit; 
+    } else if (actualDigit === "." && screenContent.includes('.') && 
+    (
+        !screenContent.includes('+') &&
+        !screenContent.includes('−') &&
+        !screenContent.includes('×') &&
+        !screenContent.includes('÷')
+    )) 
+    {
+        return;
+    } else if (actualDigit === '.' && 
+    (
+        screenContent.includes('+') ||
+        screenContent.includes('−') ||
+        screenContent.includes('×') ||
+        screenContent.includes('÷')
+    )) { 
+        let operator = verifyOperator();
+        let operand2 = screen.textContent.split(operator)[1];
+        console.log(operand2);
+        if (operand2.includes('.')) {
+            return;
+        } else {
+            screen.textContent = screenContent.join("") + actualDigit;
+        }
     } else {
         screen.textContent = screenContent.join("") + actualDigit;
     }
@@ -63,6 +90,21 @@ function typeCharacters(e) {
 
 
     console.log(screenContent);
+} 
+
+function verifyOperator () {
+    const screen = document.getElementById('screen');
+    let screenContent = screen.textContent;
+
+    if (screenContent.includes('+')){
+        return '+'
+    } else if (screenContent.includes('−')){
+        return '−'
+    } else if (screenContent.includes('×')){
+        return '×'
+    } else if (screenContent.includes('÷')){
+        return '÷'
+    }
 }
 
 function erase() {
@@ -74,28 +116,42 @@ function erase() {
 
 function clearAll() {
     document.getElementById('screen').textContent = "";
+    document.getElementById('history').textContent = "";
 }
 
 function operate() {
     const screen = document.getElementById('screen');
+    const history = document.getElementById('history');
     let screenContent = screen.textContent;
+
+    let operation = screen.textContent
+
 
     if (screenContent.includes('+')){
         let operationArray = screenContent.split('+');
         let result = add(+operationArray[0], +operationArray[1]);
+        history.textContent = screenContent + " = " + result
         screen.textContent = result;
     } else if (screenContent.includes('−')){
         let operationArray = screenContent.split('−');
         let result = subtract(+operationArray[0], +operationArray[1]);
+        history.textContent = screenContent + " = " + result
         screen.textContent = result;
     } else if (screenContent.includes('×')){
         let operationArray = screenContent.split('×');
         let result = multiply(+operationArray[0], +operationArray[1]);
+        history.textContent = screenContent + " = " + result
         screen.textContent = result;
     } else if (screenContent.includes('÷')){
         let operationArray = screenContent.split('÷');
         let result = divide(+operationArray[0], +operationArray[1]);
-        screen.textContent = result;
+        if (result === "Error, division by zero.") {
+            history.textContent = result;
+            screen.textContent = "";
+        } else {
+            history.textContent = screenContent + " = " + result
+            screen.textContent = result;
+        }
     }
 
 
@@ -124,7 +180,7 @@ const keyErase = document.getElementById("kback");
 const keyClear = document.getElementById("kclear");
 const keyEqual = document.getElementById("k=");
 
-
+//atribute event listeners to the key elements
 keyZero.addEventListener('click', typeCharacters);
 keyOne.addEventListener('click', typeCharacters);
 keyTwo.addEventListener('click', typeCharacters);
@@ -146,6 +202,3 @@ keyDivision.addEventListener('click', typeCharacters);
 keyErase.addEventListener('click', erase);
 keyClear.addEventListener('click', clearAll);
 keyEqual.addEventListener('click', operate);
-
-
-
