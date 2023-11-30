@@ -82,6 +82,10 @@ body {
     user-select: none;
 }
 
+.key:hover {
+    background-color: lightgray;
+}
+
 .key-equal {
     flex: 1;
     display: flex;

@@ -1,23 +1,25 @@
 //operations 
+//This section is responsible for carrying out the operations
 
 function add(a,b) {
-    return a + b;
+    return Math.round((a + b) * 10000)/10000;
 }
 
 function subtract(a,b) {
-    return a - b;
+    return Math.round((a - b) * 10000)/10000;
 }
 
 function multiply(a,b) {
-    return a * b;
+    return Math.round((a * b) * 10000)/10000;
 }
 
 function divide(a,b) {
     if (b === 0) return "Error, division by zero."
-    return a / b;
+    return Math.round((a / b) * 10000)/10000;
 }
 
 
+//This function is responsible for placing the numbers and operands on the screen
 function typeCharacters(e) {
     const screen = document.getElementById('screen');
 
@@ -25,6 +27,7 @@ function typeCharacters(e) {
     let lastDigit = screenContent[screenContent.length - 1]
     let actualDigit = this.textContent;
 
+    if (screenContent.length > 19) return;
     if (
         (
             lastDigit === '+' ||
