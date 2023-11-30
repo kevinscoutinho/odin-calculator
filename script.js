@@ -28,6 +28,12 @@ function typeCharacters(e) {
     let actualDigit = this.textContent;
 
     if (screenContent.length > 19) return;
+
+    //The first 'if' is to avoid puting 2 or more operators in sequence
+    //The second 'if' is to verify if there is already an operand, if true it will start the calculation
+    //and add the new operator after the result of the last operation
+    //The third 'if' is to verify if there is already a dot in the left side of the operand
+    //The fourth 'if' is to verify if there is already a dot in the right side of the operand
     if (
         (
             lastDigit === '+' ||
